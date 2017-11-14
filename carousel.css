@@ -1,0 +1,61 @@
+body {
+	margin: 0;
+}
+ul{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+.wrapper {
+	position: relative;
+	width: 1280px;
+	height: 800px;
+	overflow: hidden;
+}
+.wrapper li {
+	position: absolute;
+	width: 1280px;
+	height: 800px;
+}
+.wrapper .img1 {
+	background-image: url(css/img1.jpg);
+	left: 0;
+}
+.wrapper .img2 {
+	background-image: url(css/img2.jpg);
+	left: 1280px;
+}
+.wrapper .img3 {
+	background-image: url(css/img3.jpg);
+	left: 2560px;
+}
+.wrapper .img4 {
+	background-image: url(css/img4.jpg);
+	left: 3840px;
+}
+.wrapper .img5 {
+	background-image: url(css/img1.jpg);
+	left: 5120px;
+}
+.dot {
+	position: absolute;
+	top: 700px;
+	left: 540px;
+}
+.dot::after {
+	content: "";
+	clear: both;
+	display: block;
+}
+.dot i {
+	display: block;
+	width: 30px;
+	height: 30px;
+	background-color: gray;
+	border-radius: 50%;
+	float: left;
+	margin: 10px;
+}
+.dot i.currentDot{
+	background-color: #69aaec;
+}

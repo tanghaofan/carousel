@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Carousel</title>
+	<link rel="stylesheet" type="text/css" href="carousel.css">
+</head>
+<body>
+	<div class="carousel">
+		<ul class="wrapper">
+			<li class="img1"></li>
+			<li class="img2"></li>
+			<li class="img3"></li>
+			<li class="img4"></li>
+			<li class="img5"></li>
+		</ul>
+		<div class="dot">
+			<i data-index = 0></i>
+			<i data-index = 1></i>
+			<i data-index = 2></i>
+			<i data-index = 3></i>
+		</div>
+	</div>
+	<script type="text/javascript">
+		Element.prototype.getStyle  = function (style){	//获取样式函数
+			if(window.getComputedStyle){
+				return window.getComputedStyle(this,null)[style];
+			}else{
+				return this.currentStyle[style];
+			}
+		}
+		var imgArr = document.getElementsByTagName('li'),//图片元素类数组
+			imgLen = imgArr.length,//图片元素类数组长度
+			imgNum = imgArr.length - 1;//实际轮播图片个数
+			dotNum = 0,//圆点序列标记
+			imgWidth = 1280;//图片宽度
+		function carousel(){	//轮播函数
+			var dot = document.getElementsByTagName('i')[dotNum++];
+			dotNum = (dotNum < imgNum) ? dotNum : 0;//循环一轮后点序列清零
+			var	newDot = document.getElementsByTagName('i')[dotNum],
+				moveLen = 0;//图片移动长度计数器
+			dot.className = '';
+			newDot.className = 'currentDot';//更改当前图片圆点类属性
+			var time = setInterval(function(){//图片移动计时器
+				for(var i = 0; i < imgLen; i++){
+					imgArr[i].style.left = parseFloat(imgArr[i].getStyle('left')) - 5 + 'px';
+				}
+				moveLen += 5;
+				if(moveLen === imgWidth){//判断移动了一张图片的距离
+					clearInterval(time);
+					var timeout = setTimeout(function () {//图片定时移动间隔计时器
+						if(imgArr[imgNum].getStyle('left') === '0px'){
+							var pos = 0;
+							var posStr = '';
+							for(var i = 0; i < imgLen; i++){//全部图片位置初始化
+								posStr = pos + 'px';
+								imgArr[i].style.left = posStr;
+								pos += imgWidth;
+							}
+						}
+						carousel();//递归轮播
+					},2000);
+				}
+			},5);
+			// dot.onclick = function (e) {
+			// 	clearInterval(time);
+			// 	e = e || window.event;
+			// 	var target = e.target || e.srcElement;
+			// 	var index = 0;
+			// 	var _i = document.getElementsByTagName('i');
+			// 	for (var i = 0; i < imgNum; i ++) {
+			// 		_i[i].className = '';
+			// 	}
+			// 	target.className = 'currentDot';
+			// 	index = target.dataset.index;
+			// 	console.log(index);
+			// 	// time2 = setInterval(function () {
+			// 	// 	if (parseInt(imgArr[index].style.left) >= 0) {
+			// 	// 		for(var i = 0; i < imgLen; i++){
+			// 	// 			imgArr[i].style.left = parseFloat(imgArr[i].getStyle('left')) - 5 + 'px';
+			// 	// 		}
+			// 	// 	}
+			// 	// 	if (parseInt(imgArr[index].style.left) < 0) {
+			// 	// 		for(var i = 0; i < imgLen; i++){
+			// 	// 			imgArr[i].style.left = parseFloat(imgArr[i].getStyle('left')) + 5 + 'px';
+			// 	// 		}
+			// 	// 	}
+			// 	// 	if (imgArr[index].style.left === '0px') {
+			// 	// 		clearInterval(time2);
+			// 	// 	}
+			// 	// }, 5);
+			// 	var _time = setTimeout(function() {
+			// 		carousel();
+			// 	}, 2000);
+			// }
+		}
+		
+		carousel();
+	
+	</script>
+</body>
+</html>
